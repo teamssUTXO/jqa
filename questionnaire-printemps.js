@@ -110,11 +110,18 @@ function updateProgress() {
   document.getElementById('progress-fill').style.width = (n / 5 * 100) + '%';
 }
 
+function handleQ3Input() {
+  const q3 = document.getElementById('q3');
+  if (q3 && q3.value.trim()) document.getElementById('q3-block').classList.remove('error');
+  updateProgress();
+}
+
 // ─── Validation ───
 function validate() {
   let ok = true;
   if (!document.querySelector('input[name="q1"]:checked')) { document.getElementById('q1-block').classList.add('error'); ok = false; }
   if (!document.querySelector('input[name="q2"]:checked')) { document.getElementById('q2-block').classList.add('error'); ok = false; }
+  if (!document.getElementById('q3').value.trim()) { document.getElementById('q3-block').classList.add('error'); ok = false; }
   if (npsValue === null) { document.getElementById('q4-block').classList.add('error'); ok = false; }
   if (document.querySelectorAll('#q5 input[type="checkbox"]:checked').length === 0) { document.getElementById('q5-block').classList.add('error'); ok = false; }
   if (!ok) { const fe = document.querySelector('.question-block.error'); if (fe) fe.scrollIntoView({behavior:'smooth',block:'center'}); }

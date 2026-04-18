@@ -636,6 +636,20 @@ input[type="range"].nps-slider.idle::-moz-range-thumb {
   color: #d9534f; 
 }
 
+.question-block.error .open-input {
+  border-color: #d9534f;
+}
+
+.question-block.error .nps-hint {
+  color: #d9534f;
+}
+
+.question-block.error .nps-value-badge {
+  background: #f5c6cb;
+  color: #d9534f;
+  box-shadow: 0 4px 16px rgba(217, 83, 79, .2);
+}
+
 .error-msg { 
   display: none; 
   font-size: 12px; 
