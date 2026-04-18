@@ -154,6 +154,7 @@ async function sendToDiscord(answers) {
   const ts = new Date().toLocaleString('fr-FR', { timeZone: 'Europe/Paris' });
 
   // Embed
+  const embedRes = await fetch(WEBHOOK_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
