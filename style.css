@@ -376,7 +376,7 @@ img {
   border-radius: 6px;
   padding: 10px 14px;
   font-family: 'DM Sans', sans-serif;
-  font-size: 15px;
+  font-size: 16px;
   color: var(--black);
   background: var(--white);
   outline: none;
@@ -436,7 +436,7 @@ img {
   border-radius: 8px;
   padding: 14px 16px;
   font-family: 'DM Sans', sans-serif;
-  font-size: 15px;
+  font-size: 16px;
   color: var(--black);
   background: var(--white);
   outline: none;
@@ -595,6 +595,27 @@ input[type="range"].nps-slider.idle::-moz-range-thumb {
   box-shadow: none; 
 }
 
+.btn-subtle-back {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 2px 0;
+  border: none;
+  background: transparent;
+  color: #7f8a84;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.4px;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+  transition: color .2s;
+}
+
+.btn-subtle-back:hover,
+.btn-subtle-back:focus-visible {
+  color: #6e7a73;
+}
+
 .form-mention {
   margin-top: 14px;
   font-size: 11px;
@@ -667,10 +688,12 @@ input[type="range"].nps-slider.idle::-moz-range-thumb {
   align-items: center;
   justify-content: center;
   text-align: center;
+  min-height: 100dvh;
   padding: 60px 24px;
   background: var(--white);
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .confirm-watermark {
@@ -845,7 +868,8 @@ input[type="range"].nps-slider.idle::-moz-range-thumb {
 
   #page-confirmation {
     justify-content: center;
-    padding: 40px 16px 20px;
+    min-height: 100dvh;
+    padding: 40px 16px calc(20px + env(safe-area-inset-bottom, 0px));
   }
 
   .confirm-watermark { width: min(86vw, 360px); }
@@ -874,5 +898,5 @@ input[type="range"].nps-slider.idle::-moz-range-thumb {
   .choice-item { padding: 12px; }
   .choice-text { font-size: 14px; }
   .open-input,
-  .other-input { font-size: 14px; }
+  .other-input { font-size: 16px; }
 }

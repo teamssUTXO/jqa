@@ -52,14 +52,6 @@ function showPage(id) {
   document.querySelectorAll('.page').forEach(p => { p.classList.remove('active'); p.style.display = 'none'; });
   const page = document.getElementById(id);
   page.style.display = 'flex';
-  // confirmation page needs centering
-  if (id === 'page-confirmation') {
-    page.style.flexDirection = 'column';
-    page.style.alignItems = 'center';
-    page.style.justifyContent = 'center';
-    page.style.textAlign = 'center';
-    page.style.padding = '60px 24px';
-  }
   setTimeout(() => page.classList.add('active'), 10);
   window.scrollTo(0, 0);
   if (id === 'page-questionnaire' && questionnaireStartedAt === 0) questionnaireStartedAt = Date.now();
@@ -72,6 +64,10 @@ function setStatus(msg, isError = false) {
   if (!el) return;
   el.textContent = msg;
   el.classList.toggle('error', isError);
+}
+
+function goToQuestionnaireStart() {
+  window.location.reload();
 }
 
 // ─── Radio ───
