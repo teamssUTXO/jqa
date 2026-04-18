@@ -5,6 +5,16 @@ const LAST_SUBMIT_KEY = 'printemps:last-submit-at';
 let questionnaireStartedAt = 0;
 let npsValue = null; // null = slider not touched
 
+function setNpsIdle(isIdle) {
+  const badge = document.getElementById('nps-badge');
+  const hint = document.getElementById('nps-hint');
+  const slider = document.getElementById('q4-slider');
+  if (!badge || !hint || !slider) return;
+  badge.classList.toggle('idle', isIdle);
+  hint.classList.toggle('idle', isIdle);
+  slider.classList.toggle('idle', isIdle);
+}
+
 // ─── NPS Slider ───
 function updateNPS(val) {
   npsValue = parseInt(val);
@@ -14,6 +24,7 @@ function updateNPS(val) {
 
   badge.textContent = val;
   hint.classList.add('hidden');
+  setNpsIdle(false);
   document.getElementById('q4-block').classList.remove('error');
 
   // Color: 0=red, 5=orange, 10=green
@@ -205,3 +216,4 @@ document.getElementById('page-accueil').classList.add('active');
 // Slider track init (position milieu, pas encore touché)
 document.getElementById('q4-slider').style.background =
   'linear-gradient(to right, var(--green) 0%, var(--green) 50%, var(--grey-light) 50%, var(--grey-light) 100%)';
+setNpsIdle(true);

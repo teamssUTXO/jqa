@@ -479,6 +479,17 @@ img {
   box-shadow: 0 4px 16px rgba(0,177,64,.25);
 }
 
+@keyframes nps-idle-badge {
+  0%, 100% { transform: scale(1); box-shadow: 0 4px 16px rgba(0,177,64,.18); }
+  50% { transform: scale(1.06); box-shadow: 0 6px 18px rgba(0,177,64,.28); }
+}
+
+.nps-value-badge.idle {
+  background: #d5dcd8;
+  color: #5f6a64;
+  animation: nps-idle-badge 1.7s ease-in-out infinite;
+}
+
 @keyframes badge-pulse {
   0%   { transform: scale(1); }
   45%  { transform: scale(1.22); }
@@ -530,6 +541,14 @@ input[type="range"].nps-slider::-moz-range-thumb {
 input[type="range"].nps-slider:hover::-webkit-slider-thumb {
   transform: scale(1.2);
   box-shadow: 0 4px 16px rgba(0,177,64,.4);
+}
+
+input[type="range"].nps-slider.idle::-webkit-slider-thumb {
+  animation: nps-idle-badge 1.7s ease-in-out infinite;
+}
+
+input[type="range"].nps-slider.idle::-moz-range-thumb {
+  animation: nps-idle-badge 1.7s ease-in-out infinite;
 }
 
 .nps-labels {
