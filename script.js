@@ -154,7 +154,6 @@ async function sendToDiscord(answers) {
   const ts = new Date().toLocaleString('fr-FR', { timeZone: 'Europe/Paris' });
 
   // Embed
-  await fetch(WEBHOOK_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -170,16 +169,25 @@ async function sendToDiscord(answers) {
           { name: "04 · NPS", value: `**${answers.q4}** / 10`, inline: true },
           { name: "05 · Axes d'amélioration", value: answers.q5 }
         ],
-        footer: ts
+        footer: { text: ts }
       }]
     })
   });
+
+  if (!embedRes.ok) {
+    const errText = await embedRes.text();
+    throw new Error(`Discord embed rejected (${embedRes.status}) ${errText}`);
+  }
 
   // CSV
   const fdCSV = new FormData();
   fdCSV.append('payload_json', JSON.stringify({ username: "Questionnaire", content: "CSV :" }));
   fdCSV.append('file', new Blob([buildCSV(answers, ts)], { type: 'text/csv;charset=utf-8' }), `reponse_${Date.now()}.csv`);
-  await fetch(WEBHOOK_URL, { method: 'POST', body: fdCSV });
+  const csvRes = await fetch(WEBHOOK_URL, { method: 'POST', body: fdCSV });
+  if (!csvRes.ok) {
+    const errText = await csvRes.text();
+    throw new Error(`Discord CSV rejected (${csvRes.status}) ${errText}`);
+  }
 }
 
 // ─── Submit ───
