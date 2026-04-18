@@ -1,4 +1,4 @@
-const WEBHOOK_URL = "https://discord.com/api/webhooks/1494670630371590144/1xek0ztT3ksSMoOt64HN7Lr2A_eD-ttgHluoVNzi0nYsdTEbambnVLPfkqsnTQ9A5tFv";
+const WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL;
 const MIN_COMPLETION_MS = 7000;
 const SUBMIT_COOLDOWN_MS = 10000;
 const LAST_SUBMIT_KEY = 'printemps:last-submit-at';
