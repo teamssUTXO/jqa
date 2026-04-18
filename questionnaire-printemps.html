@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Espace Chaussures — Printemps Rouen</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="questionnaire-printemps.css" />
+</head>
+<body>
+
+<div id="page-accueil" class="page active">
+
+  <img class="accueil-watermark" src="assets/logo-printemps.png" alt="" aria-hidden="true" />
+
+  <div class="accueil-logo">Printemps Rouen</div>
+
+  <h1 class="accueil-title">
+    Espace<br><em>Chaussures</em>
+  </h1>
+
+  <p class="accueil-subtitle">Votre avis nous guide</p>
+
+  <div class="divider-green"></div>
+
+  <p class="accueil-text">
+    Chère cliente, afin de toujours mieux répondre à vos attentes et d'enrichir notre sélection
+    de marques, nous vous invitons à partager vos impressions.<br><br>
+    Ce questionnaire est <strong style="color:var(--green);font-weight:600;">entièrement anonyme</strong>
+    et ne vous prendra pas plus d'une minute.
+  </p>
+
+  <button class="btn-primary" onclick="showPage('page-questionnaire')">
+    <span>Commencer &nbsp;→</span>
+  </button>
+
+  <div class="accueil-mention">Anonyme · 1 minute</div>
+</div>
+
+
+<div id="page-questionnaire" class="page" style="flex-direction:column;">
+
+  <header class="form-header">
+    <span class="form-header-brand">Printemps Rouen</span>
+    <span class="form-header-section">Espace Chaussures</span>
+  </header>
+
+  <div class="progress-bar">
+    <div class="progress-fill" id="progress-fill"></div>
+  </div>
+
+  <div class="form-body">
+
+    <div class="form-intro">
+      <div class="form-intro-eyebrow">Questionnaire satisfaction</div>
+      <h2 class="form-intro-title">Vos <em>impressions</em> nous sont précieuses</h2>
+    </div>
+
+    <div class="question-block" id="q1-block">
+      <div class="question-number">Question 01</div>
+      <div class="question-label">Aujourd'hui, vous êtes plutôt à la recherche de…</div>
+      <div class="error-msg">Veuillez sélectionner une réponse</div>
+      <div class="choices" id="q1">
+        <label class="choice-item" onclick="selectRadio(this,'q1')">
+          <input type="radio" name="q1" value="Sneakers"/>
+          <span class="choice-marker"></span>
+          <span class="choice-text">Sneakers</span>
+        </label>
+        <label class="choice-item" onclick="selectRadio(this,'q1')">
+          <input type="radio" name="q1" value="Chaussures Premium / de ville"/>
+          <span class="choice-marker"></span>
+          <span class="choice-text">Chaussures Premium / de ville</span>
+        </label>
+        <label class="choice-item" onclick="selectRadio(this,'q1')">
+          <input type="radio" name="q1" value="Les deux"/>
+          <span class="choice-marker"></span>
+          <span class="choice-text">Les deux</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="question-block" id="q2-block">
+      <div class="question-number">Question 02</div>
+      <div class="question-label">Comment évaluez-vous le choix de marques proposées dans cet espace ?</div>
+      <div class="error-msg">Veuillez attribuer une note</div>
+      <div class="stars-container" id="q2">
+        <input type="radio" name="q2" id="star5" value="5"/>
+        <label for="star5" title="Très satisfait">★</label>
+        <input type="radio" name="q2" id="star4" value="4"/>
+        <label for="star4" title="Satisfait">★</label>
+        <input type="radio" name="q2" id="star3" value="3"/>
+        <label for="star3" title="Neutre">★</label>
+        <input type="radio" name="q2" id="star2" value="2"/>
+        <label for="star2" title="Peu satisfait">★</label>
+        <input type="radio" name="q2" id="star1" value="1"/>
+        <label for="star1" title="Pas du tout satisfait">★</label>
+      </div>
+      <div class="stars-legend">
+        <span>Pas du tout satisfait</span>
+        <span>Très satisfait</span>
+      </div>
+    </div>
+
+    <div class="question-block" id="q3-block">
+      <div class="question-number">Question 03</div>
+      <div class="question-label">Y a-t-il une marque, un style ou une couleur que vous auriez aimé trouver dans notre sélection aujourd'hui ?</div>
+      <textarea class="open-input" id="q3" rows="4" placeholder="Partagez vos suggestions…" oninput="updateProgress()"></textarea>
+    </div>
+
+    <div class="question-block" id="q4-block">
+      <div class="question-number">Question 04</div>
+      <div class="question-label">Recommanderiez-vous l'espace chaussures du Printemps à votre entourage ?</div>
+      <div class="error-msg">Veuillez déplacer le curseur pour attribuer une note</div>
+
+      <div class="nps-range-wrapper">
+        <div class="nps-display">
+          <div class="nps-value-badge" id="nps-badge">—</div>
+          <p class="nps-hint" id="nps-hint">← Faites glisser le curseur pour noter de 0 à 10</p>
+        </div>
+        <input
+          type="range"
+          class="nps-slider"
+          id="q4-slider"
+          min="0" max="10" step="1"
+          value="5"
+          oninput="updateNPS(this.value)"
+          onchange="updateNPS(this.value)"
+        />
+        <div class="nps-labels">
+          <span>0 — Pas du tout</span>
+          <span>10 — Absolument</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="question-block" id="q5-block">
+      <div class="question-number">Question 05</div>
+      <div class="question-label">Sur quel point pourrions-nous nous améliorer en priorité ?</div>
+      <div class="error-msg">Veuillez sélectionner au moins une réponse</div>
+      <div class="choices" id="q5">
+        <label class="choice-item checkbox" onclick="selectCheckbox(event, this)">
+          <input type="checkbox" value="Le temps d'attente (pour essayer ou en caisse)"/>
+          <span class="choice-marker"></span>
+          <span class="choice-text">Le temps d'attente (pour essayer ou en caisse)</span>
+        </label>
+        <label class="choice-item checkbox" onclick="selectCheckbox(event, this)">
+          <input type="checkbox" value="La disponibilité des pointures"/>
+          <span class="choice-marker"></span>
+          <span class="choice-text">La disponibilité des pointures</span>
+        </label>
+        <label class="choice-item checkbox" onclick="selectCheckbox(event, this)">
+          <input type="checkbox" value="L'aménagement de l'espace (sièges, miroirs, lisibilité des prix…)"/>
+          <span class="choice-marker"></span>
+          <span class="choice-text">L'aménagement de l'espace (sièges, miroirs, lisibilité des prix…)</span>
+        </label>
+        <label class="choice-item checkbox" onclick="selectCheckbox(event, this)">
+          <input type="checkbox" value="Le conseil et l'accompagnement"/>
+          <span class="choice-marker"></span>
+          <span class="choice-text">Le conseil et l'accompagnement</span>
+        </label>
+        <label class="choice-item checkbox" id="autre-item" onclick="selectCheckbox(event, this); toggleAutre(this)">
+          <input type="checkbox" value="Autre"/>
+          <span class="choice-marker"></span>
+          <span class="choice-text">Autre</span>
+        </label>
+        <input type="text" id="autre-text" class="other-input" placeholder="Précisez votre réponse…" oninput="updateProgress()"/>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="form-footer">
+    <button class="btn-submit" onclick="submitForm()">
+      <span>Envoyer mes réponses</span>
+    </button>
+    <div class="form-mention">Questionnaire anonyme · Aucune donnée personnelle collectée</div>
+    <div id="submit-status" class="form-status" role="status" aria-live="polite"></div>
+    <input type="text" id="website-field" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true"/>
+  </div>
+
+</div>
+
+
+<div id="page-confirmation" class="page">
+
+  <img class="confirm-watermark" src="assets/logo-printemps.png" alt="" aria-hidden="true" />
+
+  <div class="confirm-icon">
+    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+  </div>
+
+  <div class="confirm-eyebrow">Merci infiniment</div>
+
+  <h2 class="confirm-title">Votre avis a bien<br>été <em>enregistré</em></h2>
+
+  <div class="ornement" style="margin:24px auto;">
+    <span>✦</span>
+  </div>
+
+  <p class="confirm-text">
+    Toute l'équipe de l'espace Chaussures vous remercie pour votre temps et vos précieuses suggestions.
+    <br><br>
+    Nous vous souhaitons une excellente journée et un très beau shopping au Printemps.
+  </p>
+
+  <div class="confirm-footer">Printemps Rouen</div>
+</div>
+
+<script src="questionnaire-printemps.js"></script>
+</body>
+</html>
