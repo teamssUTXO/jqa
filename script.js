@@ -112,6 +112,25 @@ function handleQ3Input() {
   updateProgress();
 }
 
+function keepFieldVisible(el) {
+  if (!el) return;
+  const viewport = window.visualViewport;
+
+  const scrollIfHidden = () => {
+    const rect = el.getBoundingClientRect();
+    const viewportHeight = viewport ? viewport.height : window.innerHeight;
+    const safeBottom = viewportHeight - 16;
+    if (rect.bottom > safeBottom || rect.top < 0) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  };
+
+  setTimeout(scrollIfHidden, 120);
+  if (viewport) {
+    viewport.addEventListener('resize', scrollIfHidden, { once: true });
+  }
+}
+
 // ─── Validation ───
 function validate() {
   let ok = true;
@@ -224,6 +243,12 @@ async function submitForm() {
 document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
 document.getElementById('page-accueil').style.display = 'flex';
 document.getElementById('page-accueil').classList.add('active');
+
+['q3', 'autre-text'].forEach((fieldId) => {
+  const field = document.getElementById(fieldId);
+  if (!field) return;
+  field.addEventListener('focus', () => keepFieldVisible(field));
+});
 
 // Slider track init (position milieu, pas encore touché)
 document.getElementById('q4-slider').style.background =
