@@ -1,4 +1,4 @@
-const WEBHOOK_URL = "https://discord.com/api/webhooks/1495086841161060472/on_cZM5eC0W8QCqUlhrgsKkBnlG-Dx0EVvngzx0r3xJE_j7s_4EsizlfSu0kXlGMpmFT";
+const WEBHOOK_URL = "https://discord.com/api/webhooks/1496117493599834314/Bd3PJ0uKDiarndwiUVan7zEq1JgLBTYi61PigouGC_DFtpTDEaRM_z6umDd-OWBG1IFp";
 const MIN_COMPLETION_MS = 7000;
 const SUBMIT_COOLDOWN_MS = 10000;
 const LAST_SUBMIT_KEY = 'printemps:last-submit-at';
