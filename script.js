@@ -153,13 +153,14 @@ function collectAnswers() {
   const autreTxt = document.getElementById('autre-text').value.trim();
   if (autreTxt && q5arr.includes('Autre')) q5arr[q5arr.indexOf('Autre')] = `Autre : ${autreTxt}`;
   const q5 = q5arr.length > 0 ? q5arr.join(', ') : '—';
-  return { q1, q2, q3, q4, q5 };
+  const q6 = document.getElementById('q6')?.value.trim() || '(non renseigné)';
+  return { q1, q2, q3, q4, q5, q6 };
 }
 
 // ─── Build CSV (BOM for Excel) ───
 function buildCSV(a, ts) {
-  const headers = ['Date','Q1 - Orientation','Q2 - Satisfaction offre','Q3 - Suggestions','Q4 - NPS','Q5 - Axes amélioration'];
-  const row = [ts, a.q1, a.q2+'/5', a.q3, a.q4+'/10', a.q5];
+  const headers = ['Date','Q1 - Orientation','Q2 - Satisfaction offre','Q3 - Suggestions','Q4 - NPS','Q5 - Axes amélioration','Q6 - Commentaire libre (facultatif)'];
+  const row = [ts, a.q1, a.q2+'/5', a.q3, a.q4+'/10', a.q5, a.q6];
   const esc = v => `"${String(v).replace(/"/g,'""')}"`;
   return '\uFEFF' + headers.map(esc).join(';') + '\n' + row.map(esc).join(';');
 }
@@ -183,7 +184,8 @@ async function sendToDiscord(answers) {
           { name: "\u200b", value: "\u200b", inline: true },
           { name: "03 · Suggestions libres", value: answers.q3 },
           { name: "04 · NPS", value: `**${answers.q4}** / 10`, inline: true },
-          { name: "05 · Axes d'amélioration", value: answers.q5 }
+          { name: "05 · Axes d'amélioration", value: answers.q5 },
+          { name: "06 · Dernier commentaire (facultatif)", value: answers.q6 }
         ],
         footer: { text: ts }
       }]

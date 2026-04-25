@@ -299,6 +299,14 @@ img {
   margin-bottom: 22px;
 }
 
+.optional-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.72em;
+  font-weight: 500;
+  color: var(--grey);
+  font-style: normal;
+}
+
 .choices { 
   display: flex; 
   flex-direction: column; 
