@@ -9,21 +9,45 @@
 </head>
 <body>
 
+<div class="lang-switcher" role="group" aria-label="Language">
+  <button type="button" class="lang-btn" data-lang="fr" onclick="setLanguage('fr')" aria-label="Français">
+    <svg viewBox="0 0 3 2" width="20" height="14" aria-hidden="true">
+      <rect width="1" height="2" fill="#002395"/>
+      <rect x="1" width="1" height="2" fill="#ffffff"/>
+      <rect x="2" width="1" height="2" fill="#ED2939"/>
+    </svg>
+    <span>FR</span>
+  </button>
+  <button type="button" class="lang-btn" data-lang="en" onclick="setLanguage('en')" aria-label="English">
+    <svg viewBox="0 0 60 30" width="20" height="14" aria-hidden="true">
+      <clipPath id="uk-clip"><path d="M0,0 v30 h60 v-30 z"/></clipPath>
+      <g clip-path="url(#uk-clip)">
+        <rect width="60" height="30" fill="#012169"/>
+        <path d="M0,0 L60,30 M60,0 L0,30" stroke="#ffffff" stroke-width="6"/>
+        <path d="M0,0 L60,30 M60,0 L0,30" stroke="#C8102E" stroke-width="3"/>
+        <path d="M30,0 v30 M0,15 h60" stroke="#ffffff" stroke-width="10"/>
+        <path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/>
+      </g>
+    </svg>
+    <span>EN</span>
+  </button>
+</div>
+
 <div id="page-accueil" class="page active">
 
   <img class="accueil-watermark" src="assets/logo-printemps.png" alt="" aria-hidden="true" />
 
   <div class="accueil-logo">Printemps Rouen</div>
 
-  <h1 class="accueil-title">
+  <h1 class="accueil-title" data-i18n-html="accueil.title">
     Espace<br><em>Chaussures</em>
   </h1>
 
-  <p class="accueil-subtitle">Votre avis nous guide</p>
+  <p class="accueil-subtitle" data-i18n="accueil.subtitle">Votre avis nous guide</p>
 
   <div class="divider-green"></div>
 
-  <p class="accueil-text">
+  <p class="accueil-text" data-i18n-html="accueil.text">
     Chère cliente, afin de toujours mieux répondre à vos attentes et d'enrichir notre sélection
     de marques, nous vous invitons à partager vos impressions.<br><br>
     Ce questionnaire est <strong style="color:var(--green);font-weight:600;">entièrement anonyme</strong>
@@ -31,10 +55,10 @@
   </p>
 
   <button class="btn-primary" onclick="showPage('page-questionnaire')">
-    <span>Commencer &nbsp;→</span>
+    <span data-i18n="accueil.start">Commencer &nbsp;→</span>
   </button>
 
-  <div class="accueil-mention">Anonyme · 1 minute</div>
+  <div class="accueil-mention" data-i18n="accueil.mention">Anonyme · 1 minute</div>
 </div>
 
 
@@ -42,7 +66,7 @@
 
   <header class="form-header">
     <span class="form-header-brand">Printemps Rouen</span>
-    <span class="form-header-section">Espace Chaussures</span>
+    <span class="form-header-section" data-i18n="form.section">Espace Chaussures</span>
   </header>
 
   <div class="progress-bar">
@@ -52,72 +76,72 @@
   <div class="form-body">
 
     <div class="form-intro">
-      <div class="form-intro-eyebrow">Questionnaire satisfaction</div>
-      <h2 class="form-intro-title">Vos <em>impressions</em> nous sont précieuses</h2>
+      <div class="form-intro-eyebrow" data-i18n="form.eyebrow">Questionnaire satisfaction</div>
+      <h2 class="form-intro-title" data-i18n-html="form.title">Vos <em>impressions</em> nous sont précieuses</h2>
     </div>
 
     <div class="question-block" id="q1-block">
-      <div class="question-number">Question 01</div>
-      <div class="question-label">Aujourd'hui, vous êtes plutôt à la recherche de…</div>
-      <div class="error-msg">Veuillez sélectionner une réponse</div>
+      <div class="question-number" data-i18n="q.num1">Question 01</div>
+      <div class="question-label" data-i18n="q1.label">Aujourd'hui, vous êtes plutôt à la recherche de…</div>
+      <div class="error-msg" data-i18n="q1.error">Veuillez sélectionner une réponse</div>
       <div class="choices" id="q1">
         <label class="choice-item" onclick="selectRadio(this,'q1')">
           <input type="radio" name="q1" value="Chaussures Premium / de ville"/>
           <span class="choice-marker"></span>
-          <span class="choice-text">Chaussures Premium / de ville</span>
+          <span class="choice-text" data-i18n="q1.opt1">Chaussures Premium / de ville</span>
         </label>
         <label class="choice-item" onclick="selectRadio(this,'q1')">
           <input type="radio" name="q1" value="Sneakers"/>
           <span class="choice-marker"></span>
-          <span class="choice-text">Sneakers</span>
+          <span class="choice-text" data-i18n="q1.opt2">Sneakers</span>
         </label>
         <label class="choice-item" onclick="selectRadio(this,'q1')">
           <input type="radio" name="q1" value="Les deux"/>
           <span class="choice-marker"></span>
-          <span class="choice-text">Les deux</span>
+          <span class="choice-text" data-i18n="q1.opt3">Les deux</span>
         </label>
       </div>
     </div>
 
     <!-- Q2 -->
     <div class="question-block" id="q2-block">
-      <div class="question-number">Question 02</div>
-      <div class="question-label">Comment évaluez-vous le choix de marques proposées dans cet espace ?</div>
-      <div class="error-msg">Veuillez attribuer une note</div>
+      <div class="question-number" data-i18n="q.num2">Question 02</div>
+      <div class="question-label" data-i18n="q2.label">Comment évaluez-vous le choix de marques proposées dans cet espace ?</div>
+      <div class="error-msg" data-i18n="q2.error">Veuillez attribuer une note</div>
       <div class="stars-container" id="q2">
         <input type="radio" name="q2" id="star5" value="5"/>
-        <label for="star5" title="Très satisfait">★</label>
+        <label for="star5" data-i18n-title="q2.t5" title="Très satisfait">★</label>
         <input type="radio" name="q2" id="star4" value="4"/>
-        <label for="star4" title="Satisfait">★</label>
+        <label for="star4" data-i18n-title="q2.t4" title="Satisfait">★</label>
         <input type="radio" name="q2" id="star3" value="3"/>
-        <label for="star3" title="Neutre">★</label>
+        <label for="star3" data-i18n-title="q2.t3" title="Neutre">★</label>
         <input type="radio" name="q2" id="star2" value="2"/>
-        <label for="star2" title="Peu satisfait">★</label>
+        <label for="star2" data-i18n-title="q2.t2" title="Peu satisfait">★</label>
         <input type="radio" name="q2" id="star1" value="1"/>
-        <label for="star1" title="Pas du tout satisfait">★</label>
+        <label for="star1" data-i18n-title="q2.t1" title="Pas du tout satisfait">★</label>
       </div>
       <div class="stars-legend">
-        <span>Pas du tout satisfait</span>
-        <span>Très satisfait</span>
+        <span data-i18n="q2.legLeft">Pas du tout satisfait</span>
+        <span data-i18n="q2.legRight">Très satisfait</span>
       </div>
     </div>
 
     <div class="question-block" id="q3-block">
-      <div class="question-number">Question 03</div>
-      <div class="question-label">Y a-t-il une marque, un style ou une couleur que vous auriez aimé trouver dans notre sélection aujourd'hui ?</div>
-      <div class="error-msg">Veuillez renseigner une réponse</div>
-      <textarea class="open-input" id="q3" rows="4" placeholder="Partagez vos suggestions…" oninput="handleQ3Input()"></textarea>
+      <div class="question-number" data-i18n="q.num3">Question 03</div>
+      <div class="question-label" data-i18n="q3.label">Y a-t-il une marque, un style ou une couleur que vous auriez aimé trouver dans notre sélection aujourd'hui ?</div>
+      <div class="error-msg" data-i18n="q3.error">Veuillez renseigner une réponse</div>
+      <textarea class="open-input" id="q3" rows="4" data-i18n-placeholder="q3.placeholder" placeholder="Partagez vos suggestions…" oninput="handleQ3Input()"></textarea>
     </div>
 
     <div class="question-block" id="q4-block">
-      <div class="question-number">Question 04</div>
-      <div class="question-label">Recommanderiez-vous l'espace chaussures du Printemps à votre entourage ?</div>
-      <div class="error-msg">Veuillez déplacer le curseur pour attribuer une note</div>
+      <div class="question-number" data-i18n="q.num4">Question 04</div>
+      <div class="question-label" data-i18n="q4.label">Recommanderiez-vous l'espace chaussures du Printemps à votre entourage ?</div>
+      <div class="error-msg" data-i18n="q4.error">Veuillez déplacer le curseur pour attribuer une note</div>
 
         <div class="nps-range-wrapper">
           <div class="nps-display">
             <div class="nps-value-badge" id="nps-badge">—</div>
-            <p class="nps-hint" id="nps-hint">Faites glisser le curseur pour choisir votre note (0 à 10)</p>
+            <p class="nps-hint" id="nps-hint" data-i18n="q4.hint">Faites glisser le curseur pour choisir votre note (0 à 10)</p>
           </div>
         <input
           type="range"
@@ -129,64 +153,64 @@
           onchange="updateNPS(this.value)"
         />
         <div class="nps-labels">
-          <span>0 — Pas du tout</span>
-          <span>10 — Absolument</span>
+          <span data-i18n="q4.labLeft">0 — Pas du tout</span>
+          <span data-i18n="q4.labRight">10 — Absolument</span>
         </div>
       </div>
     </div>
 
     <div class="question-block" id="q5-block">
-      <div class="question-number">Question 05</div>
-      <div class="question-label">Sur quel point pourrions-nous nous améliorer en priorité ?</div>
-      <div class="error-msg">Veuillez sélectionner au moins une réponse</div>
+      <div class="question-number" data-i18n="q.num5">Question 05</div>
+      <div class="question-label" data-i18n="q5.label">Sur quel point pourrions-nous nous améliorer en priorité ?</div>
+      <div class="error-msg" data-i18n="q5.error">Veuillez sélectionner au moins une réponse</div>
       <div class="choices" id="q5">
         <label class="choice-item checkbox" onclick="selectCheckbox(event, this)">
           <input type="checkbox" value="Le temps d'attente (pour essayer ou en caisse)"/>
           <span class="choice-marker"></span>
-          <span class="choice-text">Le temps d'attente (pour essayer ou en caisse)</span>
+          <span class="choice-text" data-i18n="q5.opt1">Le temps d'attente (pour essayer ou en caisse)</span>
         </label>
         <label class="choice-item checkbox" onclick="selectCheckbox(event, this)">
           <input type="checkbox" value="La disponibilité des pointures"/>
           <span class="choice-marker"></span>
-          <span class="choice-text">La disponibilité des pointures</span>
+          <span class="choice-text" data-i18n="q5.opt2">La disponibilité des pointures</span>
         </label>
         <label class="choice-item checkbox" onclick="selectCheckbox(event, this)">
           <input type="checkbox" value="L'aménagement de l'espace (sièges, miroirs, lisibilité des prix…)"/>
           <span class="choice-marker"></span>
-          <span class="choice-text">L'aménagement de l'espace (sièges, miroirs, lisibilité des prix…)</span>
+          <span class="choice-text" data-i18n="q5.opt3">L'aménagement de l'espace (sièges, miroirs, lisibilité des prix…)</span>
         </label>
         <label class="choice-item checkbox" onclick="selectCheckbox(event, this)">
           <input type="checkbox" value="Le conseil et l'accompagnement"/>
           <span class="choice-marker"></span>
-          <span class="choice-text">Le conseil et l'accompagnement</span>
+          <span class="choice-text" data-i18n="q5.opt4">Le conseil et l'accompagnement</span>
         </label>
         <label class="choice-item checkbox" onclick="selectCheckbox(event, this)">
           <input type="checkbox" value="Rien"/>
           <span class="choice-marker"></span>
-          <span class="choice-text">Rien</span>
+          <span class="choice-text" data-i18n="q5.opt5">Rien</span>
         </label>
         <label class="choice-item checkbox" id="autre-item" onclick="selectCheckbox(event, this); toggleAutre(this)">
           <input type="checkbox" value="Autre"/>
           <span class="choice-marker"></span>
-          <span class="choice-text">Autre</span>
+          <span class="choice-text" data-i18n="q5.opt6">Autre</span>
         </label>
-        <input type="text" id="autre-text" class="other-input" placeholder="Précisez votre réponse…" oninput="updateProgress()"/>
+        <input type="text" id="autre-text" class="other-input" data-i18n-placeholder="q5.otherPlaceholder" placeholder="Précisez votre réponse…" oninput="updateProgress()"/>
       </div>
     </div>
 
     <div class="question-block" id="q6-block">
-      <div class="question-number">Question 06</div>
-      <div class="question-label">Souhaitez-vous ajouter un dernier commentaire ? <span class="optional-label">(facultatif)</span></div>
-      <textarea class="open-input" id="q6" rows="4" placeholder="Vous pouvez partager ici toute remarque complémentaire…" oninput="updateProgress()"></textarea>
+      <div class="question-number" data-i18n="q.num6">Question 06</div>
+      <div class="question-label" data-i18n-html="q6.label">Souhaitez-vous ajouter un dernier commentaire ? <span class="optional-label">(facultatif)</span></div>
+      <textarea class="open-input" id="q6" rows="4" data-i18n-placeholder="q6.placeholder" placeholder="Vous pouvez partager ici toute remarque complémentaire…" oninput="updateProgress()"></textarea>
     </div>
 
   </div>
 
   <div class="form-footer">
     <button class="btn-submit" onclick="submitForm()">
-      <span>Envoyer mes réponses</span>
+      <span data-i18n="submit.btn">Envoyer mes réponses</span>
     </button>
-    <div class="form-mention">Questionnaire anonyme · Aucune donnée personnelle collectée</div>
+    <div class="form-mention" data-i18n="submit.mention">Questionnaire anonyme · Aucune donnée personnelle collectée</div>
     <div id="submit-status" class="form-status" role="status" aria-live="polite"></div>
     <input type="text" id="website-field" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true"/>
   </div>
@@ -202,21 +226,21 @@
     <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
   </div>
 
-  <div class="confirm-eyebrow">Merci infiniment</div>
+  <div class="confirm-eyebrow" data-i18n="confirm.eyebrow">Merci infiniment</div>
 
-  <h2 class="confirm-title">Votre avis a bien<br>été <em>enregistré</em></h2>
+  <h2 class="confirm-title" data-i18n-html="confirm.title">Votre avis a bien<br>été <em>enregistré</em></h2>
 
   <div class="ornement" style="margin:24px auto;">
     <span>✦</span>
   </div>
 
-  <p class="confirm-text">
+  <p class="confirm-text" data-i18n-html="confirm.text">
     Toute l'équipe de l'espace Chaussures vous remercie pour votre temps et vos précieuses suggestions.
     <br><br>
     Nous vous souhaitons une excellente journée et un très beau shopping au Printemps.
   </p>
 
-  <button class="btn-subtle-back" type="button" onclick="goToQuestionnaireStart()">Revenir au début du questionnaire</button>
+  <button class="btn-subtle-back" type="button" onclick="goToQuestionnaireStart()" data-i18n="confirm.back">Revenir au début du questionnaire</button>
 
   <div class="confirm-footer">Printemps Rouen</div>
 </div>

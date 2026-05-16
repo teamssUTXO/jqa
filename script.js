@@ -2,8 +2,169 @@ const WEBHOOK_URL = "https://discord.com/api/webhooks/1500896639479713852/WNuyLn
 const MIN_COMPLETION_MS = 7000;
 const SUBMIT_COOLDOWN_MS = 10000;
 const LAST_SUBMIT_KEY = 'printemps:last-submit-at';
+const LANG_KEY = 'printemps:lang';
 let questionnaireStartedAt = 0;
 let npsValue = null; // null = slider not touched
+let currentLang = 'fr';
+
+// ─── i18n ───
+const I18N = {
+  fr: {
+    'accueil.title': 'Espace<br><em>Chaussures</em>',
+    'accueil.subtitle': 'Votre avis nous guide',
+    'accueil.text': "Chère cliente, afin de toujours mieux répondre à vos attentes et d'enrichir notre sélection de marques, nous vous invitons à partager vos impressions.<br><br>Ce questionnaire est <strong style=\"color:var(--green);font-weight:600;\">entièrement anonyme</strong> et ne vous prendra pas plus d'une minute.",
+    'accueil.start': 'Commencer →',
+    'accueil.mention': 'Anonyme · 1 minute',
+    'form.section': 'Espace Chaussures',
+    'form.eyebrow': 'Questionnaire satisfaction',
+    'form.title': 'Vos <em>impressions</em> nous sont précieuses',
+    'q.num1': 'Question 01',
+    'q.num2': 'Question 02',
+    'q.num3': 'Question 03',
+    'q.num4': 'Question 04',
+    'q.num5': 'Question 05',
+    'q.num6': 'Question 06',
+    'q1.label': "Aujourd'hui, vous êtes plutôt à la recherche de…",
+    'q1.error': 'Veuillez sélectionner une réponse',
+    'q1.opt1': 'Chaussures Premium / de ville',
+    'q1.opt2': 'Sneakers',
+    'q1.opt3': 'Les deux',
+    'q2.label': 'Comment évaluez-vous le choix de marques proposées dans cet espace ?',
+    'q2.error': 'Veuillez attribuer une note',
+    'q2.t1': 'Pas du tout satisfait',
+    'q2.t2': 'Peu satisfait',
+    'q2.t3': 'Neutre',
+    'q2.t4': 'Satisfait',
+    'q2.t5': 'Très satisfait',
+    'q2.legLeft': 'Pas du tout satisfait',
+    'q2.legRight': 'Très satisfait',
+    'q3.label': "Y a-t-il une marque, un style ou une couleur que vous auriez aimé trouver dans notre sélection aujourd'hui ?",
+    'q3.error': 'Veuillez renseigner une réponse',
+    'q3.placeholder': 'Partagez vos suggestions…',
+    'q4.label': "Recommanderiez-vous l'espace chaussures du Printemps à votre entourage ?",
+    'q4.error': 'Veuillez déplacer le curseur pour attribuer une note',
+    'q4.hint': 'Faites glisser le curseur pour choisir votre note (0 à 10)',
+    'q4.labLeft': '0 — Pas du tout',
+    'q4.labRight': '10 — Absolument',
+    'q5.label': 'Sur quel point pourrions-nous nous améliorer en priorité ?',
+    'q5.error': 'Veuillez sélectionner au moins une réponse',
+    'q5.opt1': "Le temps d'attente (pour essayer ou en caisse)",
+    'q5.opt2': 'La disponibilité des pointures',
+    'q5.opt3': "L'aménagement de l'espace (sièges, miroirs, lisibilité des prix…)",
+    'q5.opt4': "Le conseil et l'accompagnement",
+    'q5.opt5': 'Rien',
+    'q5.opt6': 'Autre',
+    'q5.otherPlaceholder': 'Précisez votre réponse…',
+    'q6.label': 'Souhaitez-vous ajouter un dernier commentaire ? <span class="optional-label">(facultatif)</span>',
+    'q6.placeholder': 'Vous pouvez partager ici toute remarque complémentaire…',
+    'submit.btn': 'Envoyer mes réponses',
+    'submit.mention': 'Questionnaire anonyme · Aucune donnée personnelle collectée',
+    'submit.sending': 'Envoi en cours…',
+    'submit.cooldown': (s) => `Merci de patienter encore ${s}s.`,
+    'submit.tooSoon': (s) => `Merci de prendre quelques secondes supplémentaires (${s}s).`,
+    'submit.netError': 'Connexion indisponible. Vérifiez Internet puis réessayez.',
+    'confirm.eyebrow': 'Merci infiniment',
+    'confirm.title': 'Votre avis a bien<br>été <em>enregistré</em>',
+    'confirm.text': "Toute l'équipe de l'espace Chaussures vous remercie pour votre temps et vos précieuses suggestions.<br><br>Nous vous souhaitons une excellente journée et un très beau shopping au Printemps.",
+    'confirm.back': 'Revenir au début du questionnaire'
+  },
+  en: {
+    'accueil.title': 'Footwear<br><em>Department</em>',
+    'accueil.subtitle': 'Your feedback guides us',
+    'accueil.text': "Dear customer, to better meet your expectations and enrich our brand selection, we invite you to share your impressions.<br><br>This survey is <strong style=\"color:var(--green);font-weight:600;\">fully anonymous</strong> and will take no more than a minute.",
+    'accueil.start': 'Start →',
+    'accueil.mention': 'Anonymous · 1 minute',
+    'form.section': 'Footwear Department',
+    'form.eyebrow': 'Satisfaction survey',
+    'form.title': 'Your <em>impressions</em> matter to us',
+    'q.num1': 'Question 01',
+    'q.num2': 'Question 02',
+    'q.num3': 'Question 03',
+    'q.num4': 'Question 04',
+    'q.num5': 'Question 05',
+    'q.num6': 'Question 06',
+    'q1.label': 'Today, you are mainly looking for…',
+    'q1.error': 'Please select an answer',
+    'q1.opt1': 'Premium / city shoes',
+    'q1.opt2': 'Sneakers',
+    'q1.opt3': 'Both',
+    'q2.label': 'How would you rate the brand selection offered in this department?',
+    'q2.error': 'Please give a rating',
+    'q2.t1': 'Not satisfied at all',
+    'q2.t2': 'Slightly satisfied',
+    'q2.t3': 'Neutral',
+    'q2.t4': 'Satisfied',
+    'q2.t5': 'Very satisfied',
+    'q2.legLeft': 'Not satisfied at all',
+    'q2.legRight': 'Very satisfied',
+    'q3.label': 'Is there a brand, style or colour you would have liked to find in our selection today?',
+    'q3.error': 'Please provide an answer',
+    'q3.placeholder': 'Share your suggestions…',
+    'q4.label': 'Would you recommend the Printemps footwear department to people around you?',
+    'q4.error': 'Please move the slider to give a rating',
+    'q4.hint': 'Drag the slider to choose your rating (0 to 10)',
+    'q4.labLeft': '0 — Not at all',
+    'q4.labRight': '10 — Absolutely',
+    'q5.label': 'Which area should we improve first?',
+    'q5.error': 'Please select at least one answer',
+    'q5.opt1': 'Waiting time (fitting or checkout)',
+    'q5.opt2': 'Shoe size availability',
+    'q5.opt3': 'Department layout (seats, mirrors, price legibility…)',
+    'q5.opt4': 'Advice and assistance',
+    'q5.opt5': 'Nothing',
+    'q5.opt6': 'Other',
+    'q5.otherPlaceholder': 'Please specify…',
+    'q6.label': 'Any final comment? <span class="optional-label">(optional)</span>',
+    'q6.placeholder': 'Feel free to share any additional remark…',
+    'submit.btn': 'Submit my answers',
+    'submit.mention': 'Anonymous survey · No personal data collected',
+    'submit.sending': 'Sending…',
+    'submit.cooldown': (s) => `Please wait ${s}s more.`,
+    'submit.tooSoon': (s) => `Please take a few more seconds (${s}s).`,
+    'submit.netError': 'Connection unavailable. Check your Internet and try again.',
+    'confirm.eyebrow': 'Thank you so much',
+    'confirm.title': 'Your feedback has<br>been <em>recorded</em>',
+    'confirm.text': 'The whole Footwear team thanks you for your time and your valuable suggestions.<br><br>We wish you a lovely day and happy shopping at Printemps.',
+    'confirm.back': 'Back to the start of the survey'
+  }
+};
+
+function t(key, ...args) {
+  const entry = (I18N[currentLang] && I18N[currentLang][key]) ?? (I18N.fr[key] ?? key);
+  return typeof entry === 'function' ? entry(...args) : entry;
+}
+
+function applyTranslations() {
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    el.textContent = t(el.getAttribute('data-i18n'));
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    el.innerHTML = t(el.getAttribute('data-i18n-html'));
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    el.setAttribute('placeholder', t(el.getAttribute('data-i18n-placeholder')));
+  });
+  document.querySelectorAll('[data-i18n-title]').forEach(el => {
+    el.setAttribute('title', t(el.getAttribute('data-i18n-title')));
+  });
+  document.documentElement.lang = currentLang;
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.getAttribute('data-lang') === currentLang);
+  });
+}
+
+function setLanguage(lang) {
+  if (!I18N[lang]) return;
+  currentLang = lang;
+  try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
+  applyTranslations();
+  // Refresh dynamic submit button text if it's in default state
+  const btn = document.querySelector('.btn-submit');
+  if (btn && !btn.disabled) {
+    const span = btn.querySelector('span');
+    if (span) span.textContent = t('submit.btn');
+  }
+}
 
 function setNpsIdle(isIdle) {
   const badge = document.getElementById('nps-badge');
@@ -217,17 +378,17 @@ async function submitForm() {
   const now = Date.now();
   const last = Number(localStorage.getItem(LAST_SUBMIT_KEY) || 0);
   if (last && now - last < SUBMIT_COOLDOWN_MS) {
-    setStatus(`Merci de patienter encore ${Math.ceil((SUBMIT_COOLDOWN_MS - (now - last)) / 1000)}s.`, true); return;
+    setStatus(t('submit.cooldown', Math.ceil((SUBMIT_COOLDOWN_MS - (now - last)) / 1000)), true); return;
   }
   const started = questionnaireStartedAt || now;
   if (now - started < MIN_COMPLETION_MS) {
-    setStatus(`Merci de prendre quelques secondes supplémentaires (${Math.ceil((MIN_COMPLETION_MS-(now-started))/1000)}s).`, true); return;
+    setStatus(t('submit.tooSoon', Math.ceil((MIN_COMPLETION_MS-(now-started))/1000)), true); return;
   }
   if (!validate()) return;
 
   const btn = document.querySelector('.btn-submit');
   btn.disabled = true;
-  btn.querySelector('span').textContent = 'Envoi en cours…';
+  btn.querySelector('span').textContent = t('submit.sending');
 
   try {
     await sendToDiscord(collectAnswers());
@@ -236,12 +397,18 @@ async function submitForm() {
   } catch(err) {
     console.error(err);
     btn.disabled = false;
-    btn.querySelector('span').textContent = 'Envoyer mes réponses';
-    setStatus("Connexion indisponible. Vérifiez Internet puis réessayez.", true);
+    btn.querySelector('span').textContent = t('submit.btn');
+    setStatus(t('submit.netError'), true);
   }
 }
 
 // ─── Init ───
+try {
+  const saved = localStorage.getItem(LANG_KEY);
+  if (saved && I18N[saved]) currentLang = saved;
+} catch (e) {}
+applyTranslations();
+
 document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
 document.getElementById('page-accueil').style.display = 'flex';
 document.getElementById('page-accueil').classList.add('active');
