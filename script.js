@@ -217,6 +217,8 @@ function showPage(id) {
   window.scrollTo(0, 0);
   if (id === 'page-questionnaire' && questionnaireStartedAt === 0) questionnaireStartedAt = Date.now();
   if (id !== 'page-questionnaire') setStatus('');
+  const sw = document.querySelector('.lang-switcher');
+  if (sw) sw.style.display = (id === 'page-accueil') ? 'flex' : 'none';
   updateProgress();
 }
 
